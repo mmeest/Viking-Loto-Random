@@ -12,7 +12,7 @@ Winning combinations tester for Viking Loto
 
 ### Main page
 
-<p align="center"><img src="screenshot.png" width="100px"></p>
+<p align="center"><img src="screenshot.jpg" width="100px"></p>
 
 ### Features
 * *Single page app for comparing randomly generated combinations to actual*
