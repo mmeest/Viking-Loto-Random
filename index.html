@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery</title>
+    <style>
+    *{
+        text-align: center;
+        font-family: Arial;
+        font-weight: Bold;
+        font-size: 1em;
+        background-color: wheat;
+    }
+    input[type=text]{
+        width:20px;
+        background-color: white;
+    }
+    input{
+        padding: 5px;
+        border-radius: 50%;
+    }
+    input[type=button]{
+        background-color: lightblue;
+        padding: 7px 12px;
+    }
+    .green{
+        color: green;
+        background-color: white;
+        border-radius: 50%;
+        padding: 2px;
+    }
+    .red{
+        color: red;
+        background-color: white;
+        border-radius: 50%;
+        padding: 2px;
+    }
+    p{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: -3px;
+    }
+    div{
+        margin: 5px;
+    }
+    p>div{
+        width: 20px;
+    }
+    #hits{
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        margin: auto;
+        width: 20%;
+    }
+    </style>
+</head>
+<body onload="autoGenerate()">
+<br><br>
+    <p>
+        A:<input type="text" id="inputA">
+        B:<input type="text" id="inputB">
+        C:<input type="text" id="inputC">
+        D:<input type="text" id="inputD">
+        E:<input type="text" id="inputE">
+        F:<input type="text" id="inputF">
+        Lisanumber:<input type="text" id="extra">
+    </p>
+    <hr>
+    <input type="button" value="Generate" onclick="myFunction()">
+    <input type="button" onclick="window.location.reload()" value="Refresh">
+    <hr>
+    <p>
+    <div id="hits">
+        <div>
+            Looside arv: <div id="hitsCount">0</div>
+        </div>
+        <div>
+            3: <div id="hit3">0</div>
+        </div>
+        <div>
+            4: <div id="hit4">0</div>
+        </div>
+        <div>
+            5: <div id="hit5">0</div>
+        </div>
+        <div>
+            6: <div id="hit6">0</div>
+        </div>
+        <div>
+            7: <div id="hit7">0</div>
+        </div>
+
+    </div>
+    </p>
+    <hr>
+    <div id="output"></div>
+    <script>
+    var givenNumbers = [];
+    var givenExtra = "";
+    var a = [];
+    var b = 0;
+    var x = 0;
+
+    function myFunction(){
+        givenNumbers.push(document.getElementById("inputA").value);
+        givenNumbers.push(document.getElementById("inputB").value);
+        givenNumbers.push(document.getElementById("inputC").value);
+        givenNumbers.push(document.getElementById("inputD").value);
+        givenNumbers.push(document.getElementById("inputE").value);
+        givenNumbers.push(document.getElementById("inputF").value);
+        givenExtra = document.getElementById("extra").value;
+
+        for(var i = 0; i < 6; i++){
+            x = Math.floor(Math.random() * 48) + 1;
+            if(a.includes(x)){
+                i--
+            }else{
+                a.push(x);
+            }
+        }
+
+        var node = document.createElement("p");
+        var textnode = "";
+        var lineNumber = 1;
+        var textnodeNumber = "";
+        var divnode = document.createElement("div");
+        var hits = 0;
+        textnode = document.createTextNode((document.getElementById("output").childElementCount + 1).toString() + ". ");
+        /* console.log(textnode); */
+        document.getElementById("hitsCount").innerHTML = textnode.data;
+        divnode.appendChild(textnode);
+        node.appendChild(divnode);
+
+        a.forEach(element => {
+            var divnode = document.createElement("div");
+            if(givenNumbers.includes(element.toString())){
+                hits += 1;
+                var divnode = document.createElement("div");
+                textnode = document.createTextNode(element.toString() + "  ");
+                divnode.appendChild(textnode);
+                divnode.className = 'green';
+                node.appendChild(divnode);
+            }else{
+                var divnode = document.createElement("div");
+                textnode = document.createTextNode(element.toString() + "  ");
+                divnode.appendChild(textnode);
+                divnode.className = 'red';
+                node.appendChild(divnode);
+            }
+        });
+        
+        b = Math.floor(Math.random() * 8) + 1;
+        var divnode = document.createElement("div");
+        textnode = document.createTextNode(":" + b.toString());
+        divnode.appendChild(textnode);
+
+        if(b.toString() == givenExtra){
+            divnode.className = 'green';
+            hits += 1;
+        }else{
+            divnode.className = 'red';
+        }
+
+        node.appendChild(divnode);
+        document.getElementById("output").appendChild(node);
+
+        console.log(hits);
+        var hitCount = "";
+
+
+
+        if(hits == 7){
+            hitCount = (parseInt(document.getElementById("hit7").textContent) + 1).toString();
+            document.getElementById("hit7").innerHTML = hitCount;
+        }else if(hits == 6){
+            hitCount = (parseInt(document.getElementById("hit6").textContent) + 1).toString();
+            document.getElementById("hit6").innerHTML = hitCount;
+        }else if(hits == 5){
+            hitCount = (parseInt(document.getElementById("hit5").textContent) + 1).toString();
+            document.getElementById("hit5").innerHTML = hitCount;
+        }else if(hits == 4){
+            hitCount = (parseInt(document.getElementById("hit4").textContent) + 1).toString();
+            document.getElementById("hit4").innerHTML = hitCount;
+        }else if(hits == 3){
+            hitCount = (parseInt(document.getElementById("hit3").textContent) + 1).toString();
+            document.getElementById("hit3").innerHTML = hitCount;
+        }
+
+    givenNumbers = []
+    givenExtra = ""
+    a = [];
+    b = 0;
+    }
+
+    function autoGenerate(){
+        var i = 0;
+        while(i < 10000){
+            myFunction();
+            i += 1;
+        }
+    }
+    </script>
+</body>
+</html>
